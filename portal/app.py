@@ -2,28 +2,30 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-# חיבור ל־MongoDB Atlas
-MONGO_URI = "mongodb+srv://evgiofir1:Y5oJ5ka4PNyw16rg@stockcluster.egw5thu.mongodb.net/?retryWrites=true&w=majority&appName=StockCluster"
+MONGO_URI = os.environ.get("MONGO_URI")
 client = MongoClient(MONGO_URI)
 db = client["stockdb"]
 stocks_collection = db["stocks"]
 analytics_collection = db["analytics"]
 
-# בדיקת חיים
 @app.route("/")
 def home():
     return "Stock Market API is running!"
 
-# ----- מניות -----
 
 @app.route("/stocks", methods=["GET"])
 def get_stocks():
     stocks = list(stocks_collection.find({}, {"_id": 0}))
     return jsonify(stocks)
+
+@app.route("/healthz")
+def health_check():
+    return "OK"
 
 @app.route("/stocks/<symbol>", methods=["GET"])
 def get_stock(symbol):
@@ -70,7 +72,6 @@ def delete_stock(symbol):
 
     return jsonify({"message": "Stock deleted successfully"})
 
-# ----- אנליטיקות -----
 
 @app.route("/analytics/events", methods=["POST"])
 def log_event():
