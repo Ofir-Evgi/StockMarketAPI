@@ -13,6 +13,13 @@ db = client["stockdb"]
 stocks_collection = db["stocks"]
 analytics_collection = db["analytics"]
 
+global_indices_collection = db["global_indices"]
+
+@app.route("/global-indices", methods=["GET"])
+def get_global_indices():
+    indices = list(global_indices_collection.find({}, {"_id": 0}))
+    return jsonify(indices)
+
 @app.route("/")
 def home():
     return "Stock Market API is running!"
