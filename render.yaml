@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: stock-api
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://evgiofir1:Y5oJ5ka4PNyw16rg@stockcluster.egw5thu.mongodb.net/stockdb?retryWrites=true&w=majority&appName=StockCluster
