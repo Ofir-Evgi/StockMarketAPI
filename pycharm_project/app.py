@@ -12,6 +12,7 @@ client = MongoClient(MONGO_URI)
 db = client["stockdb"]
 stocks_collection = db["stocks"]
 analytics_collection = db["analytics"]
+global_indices_collection = db["global_indices"]
 
 @app.route("/")
 def home():
@@ -119,6 +120,13 @@ def top_duration():
         {"$sort": {"avg_time": -1}}
     ])
     return jsonify(list(result))
+
+
+@app.route("/global-indices", methods=["GET"])
+def get_global_indices():
+    indices = list(db["global_indices"].find({}, {"_id": 0}))
+    return jsonify(indices)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
