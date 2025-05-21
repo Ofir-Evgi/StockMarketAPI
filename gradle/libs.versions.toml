@@ -12,6 +12,7 @@ mpandroidchart = "v3.1.0"
 okhttpVersion = "4.9.3"
 retrofit = "2.11.0"
 retrofitVersion = "2.9.0"
+stockmarketapi = "Tag"
 volley = "1.2.1"
 
 [libraries]
@@ -30,6 +31,8 @@ okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-v290 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 volley = { module = "com.android.volley:volley", version.ref = "volley" }
+stockmarketapi = { module = "com.github.Ofir-Evgi:StockMarketAPI", version = "1.0.0" }
+
 
 
 [plugins]

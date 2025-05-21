@@ -17,10 +17,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") } // <<< הוספה חשובה!
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
 rootProject.name = "StockMarketProject"
 include(":app")
-include(":stockmarketsdk")
