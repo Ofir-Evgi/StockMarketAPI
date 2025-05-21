@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: pip install -r pycharm_project/requirements.txt
-    startCommand: gunicorn portal.app:app
+    startCommand: gunicorn pycharm_project.portal.app:app
     envVars:
       - key: MONGO_URI
         value: mongodb+srv://evgiofir1:Y5oJ5ka4PNyw16rg@stockcluster.egw5thu.mongodb.net/stockdb?retryWrites=true&w=majority&appName=StockCluster
