@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteStock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search stock..."
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:dropDownHeight="200dp"
+        android:completionThreshold="1" />
+
+    <ProgressBar
+        android:id="@+id/searchProgress"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone" />
+</merge>
