@@ -1,8 +1,8 @@
-# 📦 Android SDK Usage
+# Android SDK Usage
 
 This page explains how to use the Stock Market SDK in your Android app.
 
-## 🛠️ Installation via JitPack
+## Installation via JitPack
 
 Add this to your root `build.gradle`:
 
@@ -12,6 +12,8 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+
+```
 
 Then add the dependency in your app/build.gradle:
 
