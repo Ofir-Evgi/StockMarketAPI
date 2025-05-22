@@ -18,4 +18,4 @@ allprojects {
 Then add the dependency in your app/build.gradle:
 
 ```groovy
-implementation 'com.github.Ofir-Evgi:StockMarketAPI:1.0.0'
+implementation ("com.github.Ofir-Evgi:StockMarketAPI:1.0.0")
