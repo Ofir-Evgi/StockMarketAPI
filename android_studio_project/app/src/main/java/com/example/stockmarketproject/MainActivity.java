@@ -116,9 +116,7 @@ public class MainActivity extends AppCompatActivity {
         if (!selectedStocks.contains(stock)) {
             selectedStocks.add(stock);
         }
-
         Toast.makeText(this, "Stock Selected: " + stock.getSymbol(), Toast.LENGTH_SHORT).show();
-
         String userId = getPackageName();
     }
 }
