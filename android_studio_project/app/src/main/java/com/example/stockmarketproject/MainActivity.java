@@ -120,6 +120,5 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Stock Selected: " + stock.getSymbol(), Toast.LENGTH_SHORT).show();
 
         String userId = getPackageName();
-        AnalyticsTracker.logStockView(this, stock.getSymbol(), userId);
     }
 }

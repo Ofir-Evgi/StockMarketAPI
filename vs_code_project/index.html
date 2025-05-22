@@ -2,36 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stock Market Admin Portal</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Stock Market Analytics</h1>
-    <p class="subtitle">Real-time engagement insights from the mobile app</p>
-  </header>
+  <div class="container">
+    <header>
+      <h1>Stock Market Analytics</h1>
+      <p class="subtitle">Real-time engagement insights from the mobile app</p>
+    </header>
 
-  <main>
-    <section>
-      <h2>Top Viewed Stocks</h2>
-      <canvas id="stockClicksChart"></canvas>
-    </section>
+    <main>
+      <div class="dashboard-grid">
+        <section class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon stock">📈</div>
+            <h2>Top Viewed Stocks</h2>
+          </div>
+          <div class="chart-container">
+            <div class="loading" id="stockClicksLoading">Loading chart data...</div>
+            <canvas id="stockClicksChart" style="display: none;"></canvas>
+            <div class="error" id="stockClicksError" style="display: none;">
+              <div class="error-icon">⚠️</div>
+              <div>Failed to load stock data</div>
+            </div>
+          </div>
+        </section>
 
-    <section>
-      <h2>Most Visited Screens</h2>
-      <canvas id="screenViewsChart"></canvas>
-    </section>
+        <section class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon screen">📱</div>
+            <h2>Most Visited Screens</h2>
+          </div>
+          <div class="chart-container">
+            <div class="loading" id="screenViewsLoading">Loading chart data...</div>
+            <canvas id="screenViewsChart" style="display: none;"></canvas>
+            <div class="error" id="screenViewsError" style="display: none;">
+              <div class="error-icon">⚠️</div>
+              <div>Failed to load screen data</div>
+            </div>
+          </div>
+        </section>
 
-    <section>
-      <h2>Average Time per Screen</h2>
-      <canvas id="durationChart"></canvas>
-    </section>
-  </main>
+        <section class="chart-card">
+          <div class="chart-header">
+            <div class="chart-icon time">⏱️</div>
+            <h2>Average Time per Screen</h2>
+          </div>
+          <div class="chart-container">
+            <div class="loading" id="durationLoading">Loading chart data...</div>
+            <canvas id="durationChart" style="display: none;"></canvas>
+            <div class="error" id="durationError" style="display: none;">
+              <div class="error-icon">⚠️</div>
+              <div>Failed to load duration data</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
 
-  <footer>
-    <p>&copy; 2025 StockAnalytics • All rights reserved</p>
-  </footer>
+    <footer>
+      <p>&copy; 2025 StockAnalytics • All rights reserved</p>
+    </footer>
+  </div>
 
   <script src="script.js"></script>
 </body>
