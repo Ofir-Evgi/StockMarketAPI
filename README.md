@@ -875,7 +875,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 ## 📚 Documentation
 
-* **Full Developer Documentation**: Available in `/docs` folder
+* **The full documentation** is available at: [https://ofir-evgi.github.io/StockMarketAPI/](https://ofir-evgi.github.io/StockMarketAPI/)
 * **GitHub Pages**: [📄 Complete Documentation](https://ofir-evgi.github.io/StockMarketAPI)
 * **API Reference**: Interactive API documentation with examples
 * **Video Tutorials**: Step-by-step integration guides
