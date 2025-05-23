@@ -885,8 +885,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 ## 👨‍💻 Authors
 
 **Ofir Evgi**
+
 **Omer Shukroon**
+
 Advanced Mobile Seminar @ Afeka Academic College Of Engineering 2025  
+
 📧 Contact: [evgiofir1@gmail.com](mailto:evgiofir1@gmail.com)  
 🔗 GitHub: [Ofir-Evgi](https://github.com/Ofir-Evgi)
 
