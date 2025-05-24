@@ -916,5 +916,3 @@ git clone https://github.com/Ofir-Evgi/StockMarketAPI.git
 ```
 
 ---
-
-**⭐ If this SDK helps you build amazing financial apps, please give us a star on GitHub!**
