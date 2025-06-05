@@ -17,17 +17,17 @@
 
 ## 🚀 Features
 
-* 📊 Real-time stock data and global indices
-* 📈 Interactive stock graph rendering and performance tracking
-* 🔍 Advanced search and filtering capabilities
-* 📱 SDK analytics tracking (screen views, time, clicks)
-* ⚖️ Multi-stock comparison functionality
-* 🌐 Global market indices display
-* 📋 Admin dashboard with interactive charts
+* Real-time stock data and global indices
+* Interactive stock graph rendering and performance tracking
+* Advanced search and filtering capabilities
+* SDK analytics tracking (screen views, time, clicks)
+* Multi-stock comparison functionality
+* Global market indices display
+* Admin dashboard with interactive charts
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```mermaid
 graph TD
@@ -42,7 +42,7 @@ graph TD
 
 ---
 
-## 📦 Installation
+##  Installation
 
 ### Add JitPack Repository
 
@@ -70,9 +70,9 @@ dependencies {
 
 ---
 
-## 📱 SDK Views Explained
+##  SDK Views Explained
 
-### 🏷️ `StockListView`
+###  `StockListView`
 
 **Purpose**: Displays a scrollable, filterable list of stocks with real-time data and analytics tracking.
 
@@ -350,7 +350,7 @@ for (Stock stock : stocks) {
 
 ---
 
-### 🏷️ `StockCardView`
+###  `StockCardView`
 
 **Purpose**: Individual stock display component with price information and mini-chart visualization.
 
@@ -456,7 +456,7 @@ miniChart.setHistoryData(priceHistory);
 
 ---
 
-## 💡 Complete Implementation Example
+##  Complete Implementation Example
 
 ### MainActivity Setup
 ```java
@@ -668,15 +668,15 @@ AnalyticsTracker.logScreenTime(context, screenName, duration, userId);
 
 ---
 
-## 🎨 Admin Portal
+## Admin Portal
 
 Web dashboard for insights visualization built with HTML + Chart.js:
 
 **Features:**
-* 📊 **Top Clicked Stocks**: Bar chart showing most popular stocks
-* 📱 **Screen Analytics**: Most viewed screens and time spent  
-* ⏱️ **Session Analytics**: Average time per screen
-* 📈 **Real-time Charts**: Interactive visualizations with Chart.js
+*  **Top Clicked Stocks**: Bar chart showing most popular stocks
+*  **Screen Analytics**: Most viewed screens and time spent  
+*  **Session Analytics**: Average time per screen
+*  **Real-time Charts**: Interactive visualizations with Chart.js
 
 **Access:** [Admin Portal](https://stockmarketapi-qr65.onrender.com/admin)
 
@@ -758,7 +758,7 @@ If using code obfuscation, add these rules:
 
 ---
 
-## 🎯 Usage Best Practices
+## Usage Best Practices
 
 ### Memory Management
 ```java
@@ -806,7 +806,7 @@ recyclerView.setItemViewCacheSize(20);
 
 ---
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -865,7 +865,7 @@ services:
 
 ---
 
-## 📄 License
+## License
 
 [MIT License](LICENSE)
 
@@ -873,7 +873,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 * **The full documentation** is available at: [https://ofir-evgi.github.io/StockMarketAPI/](https://ofir-evgi.github.io/StockMarketAPI/)
 * **GitHub Pages**: [📄 Complete Documentation](https://ofir-evgi.github.io/StockMarketAPI)
@@ -882,7 +882,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 ---
 
-## 👨‍💻 Authors
+## Authors
 
 **Ofir Evgi**
 
@@ -895,7 +895,7 @@ Advanced Mobile Seminar @ Afeka Academic College Of Engineering 2025
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please follow these steps:
 
