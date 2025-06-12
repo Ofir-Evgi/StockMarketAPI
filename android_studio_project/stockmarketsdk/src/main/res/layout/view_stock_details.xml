@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#FFF6F2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp">
+
+    <!-- HEADER עם רקע ולוגו דינמי וכפתור חזור -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+        <!-- רקע דינמי -->
+        <ImageView
+            android:id="@+id/stockBg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/stock_placeholder_bg" />
+
+        <!-- לוגו עגול -->
+        <ImageView
+            android:id="@+id/stockLogo"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/stock_placeholder_logo"
+            android:background="@drawable/circle_bg"
+            android:scaleType="centerCrop" />
+
+        <!-- כפתור חזור -->
+        <ImageView
+            android:id="@+id/backBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="@string/back"
+            app:tint="#FFF" />
+    </FrameLayout>
+
+    <!-- Title + desc -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/stockName"
+            android:text="TESLA"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="#222"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/stockSymbol"
+            android:text="[TSLA]"
+            android:textColor="#888"
+            android:textSize="15sp"
+            android:layout_marginTop="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/stockDesc"
+            android:text="Electric Vehicle company led by Elon Musk"
+            android:textColor="#444"
+            android:textSize="15sp"
+            android:layout_marginTop="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <!-- מחיר בלבד -->
+    <TextView
+        android:id="@+id/stockPrice"
+        android:text="$799"
+        android:textColor="#111"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Chart -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp">
+        <com.example.stockmarketsdk.views.StockGraphView
+            android:id="@+id/stockChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+    <!-- News/מברקים -->
+    <TextView
+        android:text="News"
+        android:textStyle="bold"
+        android:textColor="#333"
+        android:textSize="16sp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newsList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="8dp"/>
+</LinearLayout>

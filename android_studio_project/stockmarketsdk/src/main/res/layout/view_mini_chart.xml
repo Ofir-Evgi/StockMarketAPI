@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <!-- Updated layout for the mini chart -->
+<com.example.stockmarketsdk.views.MiniChartView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/miniChart"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="4dp"
+    android:background="@android:color/transparent" />
+
+    <!-- Alternative: If you want to use it as a standalone LineChart -->
+    <!--
+    <com.github.mikephil.charting.charts.LineChart
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/miniChart"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@android:color/transparent" />
+-->
