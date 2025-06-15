@@ -1,107 +1,313 @@
-# 📱 Android Example Application
+# 📱 StockMarketAPI Example App Guide
 
-This page documents the official Android example app bundled with the **StockMarketAPI SDK**. It demonstrates how to use the SDK views, connect to the API, and visualize stock market data effectively.
+This guide demonstrates how to implement a complete stock market application using the StockMarketAPI SDK.
 
-## 🧽 Overview
-
-The sample application includes:
-
-* 🔍 **Search View** with autocomplete (StockSearchView)
-* 📃 **Stock List View** with mini-charts (StockListView)
-* 📈 **Graph Activity** with MPAndroidChart (StockGraphView)
-* ⚖️ **Stock Comparison** tool (StockComparisonView)
-* 🌍 **Global Market Indices** section (GlobalIndexView)
-* 📊 **Analytics Tracking** (screen time, clicks, stock views)
-
-## 📂 Project Structure
+## Project Structure
 
 ```
 app/
-├── MainActivity.java
-├── StockGraphActivity.java
-├── StockComparisonActivity.java
-├── GlobalIndicesActivity.java
-├── StockDetailActivity.java
-├── StockAdapter.java
+├── java/
+│   └── com.example.stockmarket/
+│       ├── MainActivity.kt
+│       ├── StockListActivity.kt
+│       ├── StockDetailActivity.kt
+│       ├── GlobalIndicesActivity.kt
+│       └── ComparisonActivity.kt
+└── res/
+    └── layout/
+        ├── activity_main.xml
+        ├── activity_stock_list.xml
+        ├── activity_stock_detail.xml
+        ├── activity_global_indices.xml
+        └── activity_comparison.xml
 ```
 
-## 🗄️ Screens
+## Implementation
 
-| Screen | Description |
-|--------|-------------|
-| 🔍 **Main Screen** | Search + Stock List + Compare Stocks |
-| 📈 **Graph** | Intraday performance of selected stock |
-| ⚖️ **Compare** | Add 2+ stocks to compare performance |
-| 🌍 **Indices** | View real-time global market indices |
-| 🧠 **Details** | Historical performance (1y range) |
+### 1. Main Activity
 
-## ⚙️ How It Works
+```kotlin
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-### 📌 `MainActivity.java`
+        // Initialize SDK
+        StockMarketSDK.initialize(this)
 
-* Binds `StockSearchView` and `StockListView`
-* Fetches stock data via `StockService.getStocks()`
-* Tracks user behavior with `AnalyticsTracker`
+        // Set up navigation
+        setupNavigation()
+    }
 
-```java
-StockSearchView searchView = findViewById(R.id.stockSearchView);
-StockListView listView = findViewById(R.id.stockListView);
+    private fun setupNavigation() {
+        binding.stockListButton.setOnClickListener {
+            startActivity(Intent(this, StockListActivity::class.java))
+        }
 
-searchView.setStockList(allStocks);
-listView.setStocks(allStocks);
+        binding.globalIndicesButton.setOnClickListener {
+            startActivity(Intent(this, GlobalIndicesActivity::class.java))
+        }
+
+        binding.comparisonButton.setOnClickListener {
+            startActivity(Intent(this, ComparisonActivity::class.java))
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        StockMarketSDK.detach()
+    }
+}
 ```
 
-### 📌 `StockGraphActivity.java`
+### 2. Stock List Activity
 
-Displays filtered intraday prices using:
+```kotlin
+class StockListActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_stock_list)
 
-```java
-graphView.setStock(stock); // Show prices for today
+        // Configure stock list
+        val config = StockListViewConfig.Builder()
+            .setRefreshInterval(5000)
+            .setShowVolume(true)
+            .setShowChange(true)
+            .build()
+
+        // Attach stock list view
+        StockMarketSDK.attachStockListView(
+            this,
+            binding.stockListContainer,
+            listOf("AAPL", "GOOGL", "MSFT", "AMZN"),
+            config
+        )
+
+        // Handle stock selection
+        StockMarketSDK.setOnStockSelectedListener { symbol, name ->
+            val intent = Intent(this, StockDetailActivity::class.java).apply {
+                putExtra("symbol", symbol)
+                putExtra("name", name)
+            }
+            startActivity(intent)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        StockMarketSDK.detach()
+    }
+}
 ```
 
-Also tracks screen time automatically.
+### 3. Stock Detail Activity
 
-## 📈 Stock Comparison Flow
+```kotlin
+class StockDetailActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_stock_detail)
 
-From the main screen:
+        val symbol = intent.getStringExtra("symbol") ?: return
+        val name = intent.getStringExtra("name") ?: return
 
-1. Select at least two stocks
-2. Tap "Compare"
-3. Launches `StockComparisonActivity`
-4. Renders comparison view and `LineChart`
+        // Set up toolbar
+        supportActionBar?.apply {
+            title = "$name ($symbol)"
+            setDisplayHomeAsUpEnabled(true)
+        }
 
-```java
-comparisonView.addStock(stock);
-addStockToChart(stock); // renders dataset
+        // Attach stock graph view
+        StockMarketSDK.attachStockGraphView(
+            this,
+            binding.graphContainer,
+            symbol
+        )
+
+        // Configure graph
+        StockMarketSDK.setGraphConfig(
+            GraphConfig.Builder()
+                .setTimeframe(Timeframe.ONE_MONTH)
+                .setShowVolume(true)
+                .setShowMA(true)
+                .build()
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        StockMarketSDK.detach()
+    }
+}
 ```
 
-## 🌍 Global Indices Flow
+### 4. Global Indices Activity
 
-* Loads major global indices
-* Uses `GlobalIndexView.loadData()`
-* Auto-highlights price changes with color
+```kotlin
+class GlobalIndicesActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_global_indices)
 
-```java
-globalIndexView.loadData();
+        // Attach global indices view
+        StockMarketSDK.attachGlobalIndexView(
+            this,
+            binding.indicesContainer
+        )
+
+        // Handle index selection
+        StockMarketSDK.setOnIndexSelectedListener { index ->
+            Toast.makeText(this, "Selected: ${index.name}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        StockMarketSDK.detach()
+    }
+}
 ```
 
-## 🧠 Best Practices
+### 5. Comparison Activity
 
-* ✅ Track all user actions with `AnalyticsTracker`
-* ✅ Clean up views in `onDestroy()`
-* ✅ Use proper filtering for live search
-* ✅ Use serializable objects when passing `Stock` between activities
+```kotlin
+class ComparisonActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_comparison)
 
-## 🧪 Test Tips
+        // Attach stock comparison view
+        StockMarketSDK.attachStockComparisonView(
+            this,
+            binding.comparisonContainer,
+            listOf("AAPL", "GOOGL", "MSFT")
+        )
 
-* Test network failure handling
-* Ensure SDK analytics fire correctly
-* Check if prices load based on time (e.g., 07:00 onward)
-* Simulate edge cases: no results, no internet, etc.
+        // Configure comparison
+        StockMarketSDK.setComparisonConfig(
+            ComparisonConfig.Builder()
+                .setTimeframe(Timeframe.ONE_MONTH)
+                .setShowVolume(true)
+                .setShowPercentage(true)
+                .build()
+        )
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        StockMarketSDK.detach()
+    }
+}
+```
 
-## 🔗 Related Links
+## Layout Files
 
-* [Android SDK Integration](sdk.md)
-* [API Reference](api.md)
-* [GitHub Repository](https://github.com/Ofir-Evgi/StockMarketAPI)
+### 1. Main Activity Layout
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/stockListButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stock List" />
+
+    <Button
+        android:id="@+id/globalIndicesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Global Indices" />
+
+    <Button
+        android:id="@+id/comparisonButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stock Comparison" />
+
+</LinearLayout>
+```
+
+### 2. Stock List Layout
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/stockListContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+```
+
+## Features Implemented
+
+1. **Stock List**
+
+   - Real-time updates
+   - Price changes
+   - Volume display
+   - Click handling
+
+2. **Stock Detail**
+
+   - Interactive graph
+   - Multiple timeframes
+   - Technical indicators
+   - Volume display
+
+3. **Global Indices**
+
+   - Major indices
+   - Real-time updates
+   - Change indicators
+   - Click handling
+
+4. **Stock Comparison**
+   - Multiple stocks
+   - Parallel display
+   - Price comparison
+   - Volume comparison
+
+## Best Practices
+
+1. **Lifecycle Management**
+
+   - Proper initialization
+   - Resource cleanup
+   - Memory management
+
+2. **Error Handling**
+
+   - Network errors
+   - Invalid symbols
+   - Rate limiting
+
+3. **User Experience**
+
+   - Loading indicators
+   - Error messages
+   - Smooth transitions
+
+4. **Performance**
+   - Efficient updates
+   - Background tasks
+   - Resource optimization
+
+## Running the Example
+
+1. Clone the repository
+2. Open in Android Studio
+3. Sync Gradle files
+4. Run on device/emulator
+
+## Support
+
+For additional help:
+
+- Check the [SDK documentation](sdk.md)
+- Review the [API documentation](api.md)
+- Contact: [evgiofir1@gmail.com](mailto:evgiofir1@gmail.com)
