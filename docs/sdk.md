@@ -1,4 +1,4 @@
-# �� StockMarketAPI SDK Documentation
+#  StockMarketAPI SDK Documentation
 
 ## Overview
 
