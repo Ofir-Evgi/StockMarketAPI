@@ -1,306 +1,89 @@
-# 🔌 StockMarketAPI Backend Documentation
+# 🌐 StockMarketAPI - Backend API Guide
 
-## Overview
+The backend is a **Flask-based RESTful API** that provides stock market data, global indices, and analytics. It uses **MongoDB Atlas** as the database and is deployed on **Render**.
 
-The StockMarketAPI backend provides a RESTful API for accessing real-time and historical stock market data. This documentation covers all available endpoints, request/response formats, and authentication requirements.
+---
 
-## Base URL
+## 📦 Deployment Details
 
-```
-https://api.stockmarketapi.com/v1
-```
+- **Framework**: Flask + PyMongo
+- **Cloud Hosting**: Render
+- **Database**: MongoDB Atlas
+- **API Base URL**: [`https://stockmarketapi-qr65.onrender.com`](https://stockmarketapi-qr65.onrender.com)
+- **Authentication**: None (public API)
 
-## Authentication
+---
 
-All API requests require an API key. Include it in the request header:
+## 📘 Available Endpoints
 
-```
-Authorization: Bearer YOUR_API_KEY
-```
+### 📊 Stock Data
 
-## Rate Limits
+| Method | Endpoint                   | Description                    |
+|--------|----------------------------|--------------------------------|
+| GET    | `/stocks`                  | Get all stock entries          |
+| GET    | `/stocks/<symbol>`         | Get a single stock by symbol   |
+| POST   | `/stocks`                  | Add a new stock                |
+| PUT    | `/stocks/<symbol>`         | Update existing stock data     |
+| DELETE | `/stocks/<symbol>`         | Delete a stock                 |
 
-- 100 requests per minute
-- 1000 requests per hour
-- 10000 requests per day
+### 🌍 Global Indices
 
-## Endpoints
+| Method | Endpoint               | Description                   |
+|--------|------------------------|-------------------------------|
+| GET    | `/global-indices`      | Returns global market indices |
 
-### 1. Stock Data
+### 📈 Analytics
 
-#### Get Stock Quote
+| Method | Endpoint                   | Description                         |
+|--------|----------------------------|-------------------------------------|
+| POST   | `/analytics/events`        | Log screen/stock interaction        |
+| GET    | `/analytics/stock-clicks`  | Most viewed stocks                  |
+| GET    | `/analytics/screen-views`  | Screen views count                  |
+| GET    | `/analytics/top-duration`  | Average time spent per screen       |
 
-```http
-GET /stocks/{symbol}
-```
+---
 
-**Parameters:**
+## 🧪 Example Usage
 
-- `symbol` (required): Stock symbol (e.g., AAPL)
+### ✅ Get All Stocks
 
-**Response:**
-
-```json
-{
-  "symbol": "AAPL",
-  "name": "Apple Inc.",
-  "price": 150.25,
-  "change": 2.5,
-  "changePercent": 1.69,
-  "volume": 50000000,
-  "marketCap": 2500000000000,
-  "peRatio": 25.5,
-  "eps": 5.89,
-  "dividend": 0.88,
-  "dividendYield": 0.59,
-  "timestamp": "2024-03-20T15:30:00Z"
-}
+```bash
+curl https://stockmarketapi-qr65.onrender.com/stocks
 ```
 
-#### Get Historical Data
+### ✅ Log Analytics Event
 
-```http
-GET /stocks/{symbol}/history
+```bash
+curl -X POST https://stockmarketapi-qr65.onrender.com/analytics/events \
+  -H "Content-Type: application/json" \
+  -d '{"event":"stock_view","symbol":"AAPL","user_id":"com.my.app"}'
 ```
 
-**Parameters:**
-
-- `symbol` (required): Stock symbol
-- `interval` (optional): Data interval (1m, 5m, 15m, 1h, 1d)
-- `range` (optional): Time range (1d, 5d, 1mo, 3mo, 6mo, 1y, 5y, max)
-
-**Response:**
-
-```json
-{
-  "symbol": "AAPL",
-  "interval": "1d",
-  "range": "1mo",
-  "data": [
-    {
-      "timestamp": "2024-03-20T15:30:00Z",
-      "open": 148.5,
-      "high": 151.0,
-      "low": 148.0,
-      "close": 150.25,
-      "volume": 50000000
-    }
-  ]
-}
-```
-
-### 2. Market Indices
-
-#### Get Global Indices
-
-```http
-GET /indices
-```
-
-**Response:**
-
-```json
-{
-  "indices": [
-    {
-      "name": "S&P 500",
-      "symbol": "^GSPC",
-      "value": 4500.25,
-      "change": 25.5,
-      "changePercent": 0.57,
-      "currency": "USD"
-    }
-  ]
-}
-```
-
-### 3. Search
-
-#### Search Stocks
-
-```http
-GET /search
-```
-
-**Parameters:**
-
-- `query` (required): Search query
-- `limit` (optional): Maximum results (default: 10)
-
-**Response:**
-
-```json
-{
-  "results": [
-    {
-      "symbol": "AAPL",
-      "name": "Apple Inc.",
-      "exchange": "NASDAQ",
-      "type": "Common Stock"
-    }
-  ]
-}
-```
-
-### 4. Company Info
-
-#### Get Company Profile
-
-```http
-GET /stocks/{symbol}/profile
-```
-
-**Response:**
-
-```json
-{
-  "symbol": "AAPL",
-  "name": "Apple Inc.",
-  "description": "Apple Inc. designs, manufactures, and markets smartphones...",
-  "sector": "Technology",
-  "industry": "Consumer Electronics",
-  "website": "https://www.apple.com",
-  "ceo": "Tim Cook",
-  "employees": 154000,
-  "headquarters": "Cupertino, California"
-}
-```
-
-## Error Handling
-
-### Error Response Format
-
-```json
-{
-  "error": {
-    "code": "INVALID_SYMBOL",
-    "message": "Invalid stock symbol provided",
-    "details": "The symbol 'INVALID' does not exist"
-  }
-}
-```
-
-### Common Error Codes
-
-| Code              | Description                |
-| ----------------- | -------------------------- |
-| `INVALID_SYMBOL`  | Invalid stock symbol       |
-| `RATE_LIMIT`      | Rate limit exceeded        |
-| `UNAUTHORIZED`    | Invalid API key            |
-| `SERVER_ERROR`    | Internal server error      |
-| `INVALID_REQUEST` | Invalid request parameters |
-
-## WebSocket API
-
-### Connection
+## 📂 Backend File Structure
 
 ```
-wss://api.stockmarketapi.com/v1/ws
+backend/
+├── app.py              # Main Flask server
+├── upload_to_mongo.py  # MongoDB seeding script
+├── render.yaml         # Render deployment config
+├── requirements.txt    # Python dependencies
 ```
 
-### Authentication
+## 🌐 Environment Variables
 
-```json
-{
-  "type": "auth",
-  "apiKey": "YOUR_API_KEY"
-}
+Make sure this is set on Render or locally:
+
+```env
+MONGO_URI=mongodb+srv://your-user:your-password@cluster.mongodb.net/stockdb
 ```
 
-### Subscribe to Stock Updates
+## 🧠 Notes
 
-```json
-{
-  "type": "subscribe",
-  "channel": "stock",
-  "symbol": "AAPL"
-}
-```
+- The API returns data in JSON format
+- Flask automatically handles CORS (via flask-cors)
+- Real-time analytics events are timestamped in UTC
+- Stocks and global indices are preloaded from stock_prices.json
 
-### Stock Update Format
+## 📌 Need help connecting to MongoDB Atlas?
 
-```json
-{
-  "type": "stock_update",
-  "symbol": "AAPL",
-  "price": 150.25,
-  "change": 2.5,
-  "changePercent": 1.69,
-  "volume": 50000000,
-  "timestamp": "2024-03-20T15:30:00Z"
-}
-```
-
-## Data Types
-
-### Stock
-
-```typescript
-interface Stock {
-  symbol: string;
-  name: string;
-  price: number;
-  change: number;
-  changePercent: number;
-  volume: number;
-  marketCap: number;
-  peRatio: number;
-  eps: number;
-  dividend: number;
-  dividendYield: number;
-  timestamp: string;
-}
-```
-
-### MarketIndex
-
-```typescript
-interface MarketIndex {
-  name: string;
-  symbol: string;
-  value: number;
-  change: number;
-  changePercent: number;
-  currency: string;
-}
-```
-
-### HistoricalData
-
-```typescript
-interface HistoricalData {
-  timestamp: string;
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-}
-```
-
-## Best Practices
-
-1. **Error Handling**
-
-   - Implement exponential backoff
-   - Handle rate limits
-   - Validate responses
-
-2. **Performance**
-
-   - Use WebSocket for real-time data
-   - Implement caching
-   - Batch requests when possible
-
-3. **Security**
-   - Keep API key secure
-   - Use HTTPS
-   - Validate input
-
-## Support
-
-For additional support:
-
-- API Status: [status.stockmarketapi.com](https://status.stockmarketapi.com)
-- Documentation: [docs.stockmarketapi.com](https://docs.stockmarketapi.com)
-- Contact: [api@stockmarketapi.com](mailto:api@stockmarketapi.com)
+Check [Check official docs](https://www.mongodb.com/docs/atlas/getting-started/) for setup instructions.
