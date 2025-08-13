@@ -4,6 +4,30 @@
 *MongoDB Atlas*: Connected via MONGO_URI  
 *Admin Dashboard*: Web portal for analytics & insights
 
+
+
+# Application demo video
+
+
+
+
+https://github.com/user-attachments/assets/e41f858d-8e06-44a0-9b66-740008d35efc
+
+
+
+
+
+# Portal demo video
+
+
+
+
+https://github.com/user-attachments/assets/5d0068b9-af1f-46fa-ba75-320c88deec95
+
+
+
+
+
 ## Overview
 
 *StockMarketAPI* is a comprehensive mobile-first stock market SDK designed to simplify financial data integration into Android applications. The project includes:
@@ -390,6 +414,72 @@ graphView.setTimeRange("1y"); // One year
 // Set chart style
 graphView.setChartStyle(ChartStyle.LINE);
 graphView.setChartStyle(ChartStyle.CANDLE);
+
+
+
+### 7. 🔍 SearchableStockActivity
+
+*Purpose*: A full-screen activity that provides comprehensive stock search functionality with card-based display.
+
+*Key Features:*
+
+- Card-based stock display with enhanced visual appeal
+- Real-time search with instant filtering
+- Interactive stock cards with detailed information
+- Swipe gestures and touch interactions
+- Advanced search algorithms with symbol and company name matching
+- Customizable card layouts and themes
+- Built-in loading states and error handling
+
+*Usage:*
+
+```java
+// Basic usage - opens searchable activity
+Intent intent = new Intent(context, SearchableStockActivity.class);
+startActivity(intent);
+
+// Advanced usage with custom configuration
+Intent intent = new Intent(context, SearchableStockActivity.class);
+intent.putExtra("SEARCH_MODE", "ADVANCED");
+intent.putStringArrayListExtra("FILTER_SYMBOLS", symbols);
+intent.putExtra("CARD_LAYOUT", "DETAILED");
+startActivity(intent);
+```
+
+*Customization:*
+
+```java
+// Configure search parameters
+SearchableStockActivity.Config config = new SearchableStockActivity.Config()
+    .setSearchMode(SearchMode.REAL_TIME)
+    .setCardStyle(CardStyle.MATERIAL_DESIGN)
+    .setRefreshInterval(3000)
+    .setMaxResults(50);
+
+// Launch with custom config
+SearchableStockActivity.startWithConfig(context, config);
+```
+
+*Event Handling:*
+
+```java
+// Handle stock card selection
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    
+    setOnStockCardClickListener(stock -> {
+        // Open detailed view
+        StockGraphActivity.start(this, stock);
+    });
+    
+    setOnStockCardLongClickListener(stock -> {
+        // Show context menu or quick actions
+        showStockActions(stock);
+        return true;
+    });
+}
+```
 
 
 ## 🔧 System Requirements
